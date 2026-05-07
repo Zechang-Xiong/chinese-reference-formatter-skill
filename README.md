@@ -1,25 +1,47 @@
-# 中文参考文献.skill
+<div align="center">
 
-> 「不要让参考文献格式，消耗你真正写论文的时间。」
+# 中文参考文献 Skill
 
-把中文或英文文献题名，变成可核验的中文论文参考文献条目和 BibTeX。
+### Chinese Reference Formatter Skill
 
-不是根据标题猜一条格式，也不是把搜索结果随手拼起来。这个 skill 会先核验公开元数据，再按通用中文论文参考文献习惯输出；找不到明确来源时，它会告诉你没找到，而不是编一个看起来像真的结果。
+把“只有题名”的文献，整理成可核验的中文论文参考文献和 BibTeX。
 
-适合这些场景：
+<p>
+  <img alt="Codex Skill" src="https://img.shields.io/badge/Codex-Skill-111827">
+  <img alt="GB/T 7714 style" src="https://img.shields.io/badge/GB%2FT%207714-style-2f6f4e">
+  <img alt="BibTeX output" src="https://img.shields.io/badge/output-BibTeX-8b5e34">
+  <img alt="Python stdlib" src="https://img.shields.io/badge/Python-stdlib-3776ab">
+</p>
 
-- 写中文论文、课程报告、开题报告、基金材料，需要整理参考文献。
-- 只有文献题名，需要补全作者、年份、期刊/会议、DOI、URL。
-- 需要同时拿到中文参考文献条目和 BibTeX。
-- 不想把 CNKI、Crossref、DBLP、出版社页面和 BibTeX 格式来回手动对齐。
+<p>
+  <a href="#效果示例">效果示例</a>
+  ·
+  <a href="#安装">安装</a>
+  ·
+  <a href="#它解决什么">它解决什么</a>
+  ·
+  <a href="#工作原理">工作原理</a>
+  ·
+  <a href="#开发">开发</a>
+</p>
 
-看效果 · 安装 · 它格式化什么 · 工作原理 · 仓库结构
+</div>
+
+---
+
+## 一句话
+
+写中文论文时，参考文献最烦的不是格式，而是“这条信息到底靠不靠谱”。
+
+这个 skill 做的事很窄：先核验公开元数据，再输出通用中文论文参考文献条目和 BibTeX。找不到明确文献时，它会直接说找不到；来源冲突时，它会给出歧义说明。
+
+> 不编参考文献，是这个 skill 的第一功能。
 
 ---
 
 ## 效果示例
 
-你只需要把题名丢给 Codex：
+### 你输入
 
 ```text
 帮我把下面这些文献补全成中文论文参考文献格式，并输出 BibTeX：
@@ -29,10 +51,11 @@
 3. 理想的图书馆员和信息专家的素质与形象
 ```
 
-它会先核验公开来源，再输出：
+### 它输出
 
 ````text
 标准参考文献：[1] Kipf T N, Welling M. Semi-supervised Classification with Graph Convolutional Networks[J]. International Conference on Learning Representations, 2017. DOI:10.48550/arXiv.1609.02907.
+
 BibTeX：
 ```bibtex
 @article{kipf-2017-semi-supervised-classification,
@@ -43,22 +66,27 @@ BibTeX：
   doi = {10.48550/arXiv.1609.02907}
 }
 ```
+
 核验来源：https://openreview.net/forum?id=SJU4ayYgl
 ````
 
-如果没有可靠匹配，它会明确返回：
+如果没有可靠匹配：
 
 ```text
 未找到与“definitely not a real paper title”明确对应的公开文献。
 ```
 
-如果多个来源冲突，它会给出歧义说明，而不是替你拍脑袋选一个。
+如果多个来源冲突：
+
+```text
+无法确定“...”的唯一对应文献：多个来源信息冲突，无法确定唯一对应文献。
+```
 
 ---
 
 ## 安装
 
-把仓库放到 Codex 可发现的 skills 目录：
+### Codex skills 目录
 
 ```bash
 git clone https://github.com/Zechang-Xiong/chinese-reference-formatter.git ~/.codex/skills/chinese-reference-formatter
@@ -70,13 +98,21 @@ git clone https://github.com/Zechang-Xiong/chinese-reference-formatter.git ~/.co
 git clone https://github.com/Zechang-Xiong/chinese-reference-formatter.git "$CODEX_HOME/skills/chinese-reference-formatter"
 ```
 
-然后在 Codex 里直接调用：
+### skills CLI
+
+如果你使用 open agent skills 生态的 CLI：
+
+```bash
+npx skills add Zechang-Xiong/chinese-reference-formatter
+```
+
+### 调用
 
 ```text
 Use $chinese-reference-formatter to format these literature titles as Chinese academic references with BibTeX.
 ```
 
-或者用中文说：
+中文也可以：
 
 ```text
 帮我把这些文献题名补全为中文参考文献格式，并给 BibTeX。
@@ -84,55 +120,64 @@ Use $chinese-reference-formatter to format these literature titles as Chinese ac
 
 ---
 
-## 它格式化什么
+## 它解决什么
 
-这个 skill 默认面向通用中文论文参考文献写法，接近常见 GB/T 7714 数字顺序制习惯。它支持：
+| 痛点 | 处理方式 |
+| --- | --- |
+| 只有论文题名，没有完整引用 | 搜索并比对公开元数据 |
+| 中英文文献格式混在一起 | 统一输出中文论文参考文献格式 |
+| BibTeX 和中文参考文献不一致 | 同一份标准化 JSON 同时渲染两种结果 |
+| 聚合站、预印本、正式发表版本冲突 | 权威来源优先，无法判断就标记歧义 |
+| 文献根本不存在或无法确认 | 明确返回未找到，不猜测 |
 
-类型 | 标识 | 典型字段
---- | --- | ---
-期刊论文 | `J` | 作者、题名、期刊、年、卷、期、页码、DOI
-会议论文 | `C` | 作者、题名、会议/论文集、年、页码
-图书/专著 | `M` | 作者、书名、版次、出版地、出版社、年份
-析出章节 | `M` | 章节作者、章节题名、图书题名、出版社、页码
-学位论文 | `D` | 作者、题名、保存地、保存单位、年份
-报告 | `R` | 作者、题名、机构、年份
-标准 | `S` | 标准编号、标准名称、发布机构、年份
-专利 | `P` | 申请者、专利名、国别、专利号、发布日期
-报纸 | `N` | 作者、题名、报纸名、日期、版次
-在线资源 | `EB/OL` | 作者、题名、发布日期、引用日期、URL
+---
 
-作者规则：
+## 支持类型
+
+| 类型 | 标识 | 典型字段 |
+| --- | --- | --- |
+| 期刊论文 | `J` | 作者、题名、期刊、年、卷、期、页码、DOI |
+| 会议论文 | `C` | 作者、题名、会议/论文集、年、页码 |
+| 图书/专著 | `M` | 作者、书名、版次、出版地、出版社、年份 |
+| 析出章节 | `M` | 章节作者、章节题名、图书题名、出版社、页码 |
+| 学位论文 | `D` | 作者、题名、保存地、保存单位、年份 |
+| 报告 | `R` | 作者、题名、机构、年份 |
+| 标准 | `S` | 标准编号、标准名称、发布机构、年份 |
+| 专利 | `P` | 申请者、专利名、国别、专利号、发布日期 |
+| 报纸 | `N` | 作者、题名、报纸名、日期、版次 |
+| 在线资源 | `EB/OL` | 作者、题名、发布日期、引用日期、URL |
+
+作者和语言规则：
 
 - 3 名及以内作者全部列出。
 - 超过 3 名作者，中文文献使用 `等`，英文文献使用 `et al`。
 - 中文作者名按来源保留。
 - 西文作者使用姓在前、名缩写在后，例如 `Einstein A`。
+- 题名和作者名默认不翻译。
 
 ---
 
 ## 工作原理
 
-输入一个或多个题名后，它做四件事：
+输入题名后，skill 做四步：
 
-1. 读取规则
-   先读取 `references/chinese-reference-rules.md`，确认当前格式约束。
+| 步骤 | 做什么 | 目的 |
+| --- | --- | --- |
+| 1. 读取规则 | 读取 `references/chinese-reference-rules.md` | 确认通用中文参考文献格式 |
+| 2. 核验来源 | 比对题名、作者、年份、载体、DOI/ISBN/URL | 避免把错文献格式化得很漂亮 |
+| 3. 解决冲突 | DOI、出版社、官方页面、标准/专利机构优先 | 在正式版、预印本、聚合信息之间做取舍 |
+| 4. 渲染输出 | 调用 `scripts/format_reference.py` | 同时生成中文参考文献和 BibTeX |
 
-2. 核验元数据
-   按文献类型检索公开来源，比对题名、作者、年份、载体、DOI/ISBN/URL。
+核心设计是把“核验”和“排版”拆开：
 
-3. 解决冲突
-   DOI、出版社、官方期刊、会议、标准、专利、大学仓储等权威来源优先；如果来源冲突且无法判断，就返回歧义说明。
-
-4. 格式化输出
-   把已确认的元数据规范成 JSON，交给 `scripts/format_reference.py` 渲染为中文参考文献条目和 BibTeX。
-
-这一步是有意拆开的：检索负责“别编”，formatter 负责“格式一致”。
+- 核验阶段负责判断文献是否可信。
+- formatter 阶段只负责把可信元数据稳定渲染。
 
 ---
 
 ## 直接运行 formatter
 
-`scripts/format_reference.py` 只格式化已经核验过的元数据，不负责联网检索。
+`scripts/format_reference.py` 不联网检索，只格式化已经核验过的元数据。
 
 ```bash
 python scripts/format_reference.py --start 1 < metadata.json
@@ -154,24 +199,24 @@ python scripts/format_reference.py --start 1 < metadata.json
 
 常用字段：
 
-字段 | 说明
---- | ---
-`type` | 文献类型，如 `article`、`inproceedings`、`book`、`thesis`、`standard`、`online`
-`title` | 文献题名
-`authors` | 作者列表，支持字符串或 `{ "family": "...", "given": "..." }`
-`journal` / `booktitle` | 期刊名或会议/论文集名
-`year` | 出版年份
-`volume` / `issue` / `pages` | 卷、期、页码
-`doi` / `url` | DOI 或 URL
-`access_date` | 在线资源引用日期
-`sources` | 核验来源 URL 列表
-`status` | `not_found` 或 `ambiguous` 时输出对应提示
+| 字段 | 说明 |
+| --- | --- |
+| `type` | 文献类型，如 `article`、`inproceedings`、`book`、`thesis`、`standard`、`online` |
+| `title` | 文献题名 |
+| `authors` | 作者列表，支持字符串或 `{ "family": "...", "given": "..." }` |
+| `journal` / `booktitle` | 期刊名或会议/论文集名 |
+| `year` | 出版年份 |
+| `volume` / `issue` / `pages` | 卷、期、页码 |
+| `doi` / `url` | DOI 或 URL |
+| `access_date` | 在线资源引用日期 |
+| `sources` | 核验来源 URL 列表 |
+| `status` | `not_found` 或 `ambiguous` 时输出对应提示 |
 
 ---
 
 ## 诚实边界
 
-这个 skill 明确不做几件事：
+这个 skill 明确不做这些事：
 
 - 不凭题名猜测文献信息。
 - 不把聚合站结果自动当成权威来源。
@@ -201,7 +246,7 @@ chinese-reference-formatter/
 
 ---
 
-## 开发和测试
+## 开发
 
 formatter 仅依赖 Python 标准库。测试使用 `pytest`：
 
@@ -222,17 +267,13 @@ python -m pytest scripts
 
 ## English
 
-Chinese Reference Formatter is a Codex skill for turning verified bibliographic metadata into Chinese academic references and BibTeX.
+Chinese Reference Formatter Skill turns verified bibliographic metadata into Chinese academic references and BibTeX.
 
-It is designed for common GB/T 7714-style Chinese bibliography workflows. It verifies public metadata first, formats only confirmed records, and reports uncertainty instead of inventing missing references.
-
-Install:
+It is built for common GB/T 7714-style Chinese bibliography workflows. It verifies public metadata first, formats confirmed records, and reports uncertainty instead of inventing missing references.
 
 ```bash
 git clone https://github.com/Zechang-Xiong/chinese-reference-formatter.git ~/.codex/skills/chinese-reference-formatter
 ```
-
-Use:
 
 ```text
 Use $chinese-reference-formatter to format these literature titles as Chinese academic references with BibTeX.
