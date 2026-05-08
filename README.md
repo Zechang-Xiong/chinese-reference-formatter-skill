@@ -1,6 +1,6 @@
 <div align="center">
 
-# 中文参考文献 Skill
+# 中文参考文献.skill
 
 ### Chinese Reference Formatter Skill
 
@@ -31,11 +31,11 @@
 
 ## 一句话
 
-写中文论文时，参考文献最烦的不是格式，而是“这条信息到底靠不靠谱”。
+人工整理参考文献时，最烦的是格式；让 AI 代劳时，最怕的是信息不可靠。
 
-这个 skill 做的事很窄：先核验公开元数据，再输出通用中文论文参考文献条目和 BibTeX。找不到明确文献时，它会直接说找不到；来源冲突时，它会给出歧义说明。
+这个 skill 同时解决这两个问题：先核验公开元数据，再输出通用中文论文参考文献条目和 BibTeX。找不到明确文献时，它会直接说找不到；来源冲突时，它会给出歧义说明。
 
-> 不编参考文献，是这个 skill 的第一功能。
+> 少调格式，不编参考文献。
 
 ---
 
@@ -58,7 +58,7 @@
 
 BibTeX：
 ```bibtex
-@article{kipf-2017-semi-supervised-classification,
+@article{kipf-2017-semi-supervised-classification-graph,
   author = {Kipf, Thomas N and Welling, Max},
   title = {Semi-supervised classification with graph convolutional networks},
   journal = {International Conference on Learning Representations},
@@ -68,6 +68,38 @@ BibTeX：
 ```
 
 核验来源：https://openreview.net/forum?id=SJU4ayYgl
+
+标准参考文献：[2] Lin T Y, Goyal P, Girshick R, et al. Focal Loss for Dense Object Detection[C]. Proceedings of the IEEE International Conference on Computer Vision, 2017:2980-2988.
+
+BibTeX：
+```bibtex
+@inproceedings{lin-2017-focal-loss-dense,
+  author = {Lin, Tsung-Yi and Goyal, Priya and Girshick, Ross and He, Kaiming and Dollár, Piotr},
+  title = {Focal loss for dense object detection},
+  booktitle = {Proceedings of the IEEE International Conference on Computer Vision},
+  year = {2017},
+  pages = {2980-2988}
+}
+```
+
+核验来源：https://openaccess.thecvf.com/content_ICCV_2017/html/Lin_Focal_Loss_for_ICCV_2017_paper.html
+
+标准参考文献：[3] 李炳穆. 理想的图书馆员和信息专家的素质与形象[J]. 图书情报工作, 2000, 44(2):5-8,95.
+
+BibTeX：
+```bibtex
+@article{ref-2000-b65e7d86,
+  author = {李炳穆},
+  title = {理想的图书馆员和信息专家的素质与形象},
+  journal = {图书情报工作},
+  year = {2000},
+  volume = {44},
+  number = {2},
+  pages = {5-8,95}
+}
+```
+
+核验来源：https://www.lis.ac.cn/CN/Y2000/V44/I2
 ````
 
 如果没有可靠匹配：
