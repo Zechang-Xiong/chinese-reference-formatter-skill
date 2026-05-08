@@ -29,6 +29,8 @@ def test_skill_has_no_school_specific_text():
 def test_skill_identity_is_generic_chinese_reference_formatter():
     skill_md = (SKILL_ROOT / "SKILL.md").read_text(encoding="utf-8")
 
-    assert "name: chinese-reference-formatter" in skill_md
+    assert "name: chinese-reference-formatter-skill" in skill_md
+    assert "license: MIT" in skill_md
+    assert "repository: https://github.com/Zechang-Xiong/chinese-reference-formatter-skill" in skill_md
     assert "通用中文参考文献" in skill_md
     assert "GB/T 7714" in skill_md

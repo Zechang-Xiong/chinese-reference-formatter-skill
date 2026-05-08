@@ -1,6 +1,13 @@
 ---
-name: chinese-reference-formatter
+name: chinese-reference-formatter-skill
 description: Use when a user needs通用中文参考文献、GB/T 7714-style bibliography entries, Chinese academic reference formatting, or BibTeX completion from Chinese or English literature titles, including 根据文献名补全参考文献、生成中文论文参考文献格式、format Chinese academic references.
+license: MIT
+compatibility: Requires internet access for public metadata verification. Bundled formatter uses Python 3 standard library only.
+metadata:
+  author: Zechang-Xiong
+  version: "1.0.0"
+  repository: https://github.com/Zechang-Xiong/chinese-reference-formatter-skill
+  tags: chinese-references, bibliography, bibtex, gb-t-7714, academic-writing
 ---
 
 # Chinese Reference Formatter
