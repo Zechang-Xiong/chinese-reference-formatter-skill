@@ -89,13 +89,13 @@ BibTeX：
 ### Codex skills 目录
 
 ```bash
-git clone https://github.com/Zechang-Xiong/chinese-reference-formatter.git ~/.codex/skills/chinese-reference-formatter
+git clone https://github.com/Zechang-Xiong/chinese-reference-formatter-skill.git ~/.codex/skills/chinese-reference-formatter
 ```
 
 如果你设置了 `CODEX_HOME`：
 
 ```bash
-git clone https://github.com/Zechang-Xiong/chinese-reference-formatter.git "$CODEX_HOME/skills/chinese-reference-formatter"
+git clone https://github.com/Zechang-Xiong/chinese-reference-formatter-skill.git "$CODEX_HOME/skills/chinese-reference-formatter"
 ```
 
 ### skills CLI
@@ -103,7 +103,7 @@ git clone https://github.com/Zechang-Xiong/chinese-reference-formatter.git "$COD
 如果你使用 open agent skills 生态的 CLI：
 
 ```bash
-npx skills add Zechang-Xiong/chinese-reference-formatter
+npx skills add Zechang-Xiong/chinese-reference-formatter-skill
 ```
 
 ### 调用
@@ -231,7 +231,7 @@ python scripts/format_reference.py --start 1 < metadata.json
 ## 仓库结构
 
 ```text
-chinese-reference-formatter/
+chinese-reference-formatter-skill/
 ├── README.md
 ├── SKILL.md                              # skill 入口
 ├── agents/
@@ -272,7 +272,7 @@ Chinese Reference Formatter Skill turns verified bibliographic metadata into Chi
 It is built for common GB/T 7714-style Chinese bibliography workflows. It verifies public metadata first, formats confirmed records, and reports uncertainty instead of inventing missing references.
 
 ```bash
-git clone https://github.com/Zechang-Xiong/chinese-reference-formatter.git ~/.codex/skills/chinese-reference-formatter
+git clone https://github.com/Zechang-Xiong/chinese-reference-formatter-skill.git ~/.codex/skills/chinese-reference-formatter
 ```
 
 ```text
