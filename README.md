@@ -310,3 +310,9 @@ git clone https://github.com/Zechang-Xiong/chinese-reference-formatter-skill.git
 ```text
 Use $chinese-reference-formatter-skill to format these literature titles as Chinese academic references with BibTeX.
 ```
+
+---
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Zechang-Xiong/chinese-reference-formatter-skill&type=Date)](https://www.star-history.com/#Zechang-Xiong/chinese-reference-formatter-skill&Date)
